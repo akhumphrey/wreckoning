@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/env.php';
+require_once __DIR__ . '/functions.php';
 
 use AJT\Toggl\TogglClient;
 use AJT\Toggl\ReportsClient;
@@ -32,11 +33,6 @@ $report = $report_client->details([
 
 $hours_worked_this_month = round((($report['total_grand'] / 1000) / 60) / 60, 2)    ;
 
-function plural($number)
-{
-    return $number == 1 ? '' : 's';
-}
-
 $working_hours_per_month = 150;
 $hours_remaining = $working_hours_per_month - $hours_worked_this_month;
 
@@ -66,7 +62,9 @@ for ($i = 0; $i < $remaining_days_this_month; $i++) {
 
 $average    = round($hours_remaining / $days_remaining, 2);
 
-$hour_plural = plural($hours_remaining);
-$day_plural  = plural($days_remaining);
-$avg_plural  = plural($average);
-echo "You have <strong>{$days_remaining} day{$day_plural}</strong> to complete <strong>{$hours_remaining} hour{$hour_plural}</strong>, an average of <strong>{$average} hour{$avg_plural}</strong> per day";
+$total_hours_minutes   = pretty_print_time($hours_remaining);
+$average_hours_minutes = pretty_print_time($average);
+
+$day_plural = plural($days_remaining);
+$days = "{$days_remaining} day{$day_plural}";
+echo "You have <strong>{$days}</strong> to complete <strong>{$total_hours_minutes}</strong>, approximately <strong>{$average_hours_minutes}</strong> per day";
