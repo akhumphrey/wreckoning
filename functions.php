@@ -7,13 +7,18 @@ function plural($number)
 
 function pretty_print_time($time)
 {
-    $whole    = floor($time);
-    $decimals = $time - $whole;
-    $output = "{$whole} hour" . plural($whole);
-    if (!$decimals) {
+    $hours    = floor($time);
+    $decimals = $time - $hours;
+    $minutes  = ceil($decimals * 60);
+    if ($minutes == 60) {
+        $hours++;
+        $minutes = 0;
+    }
+
+    $output = "{$hours} hour" . plural($hours);
+    if (!$minutes) {
         return $output;
     }
 
-    $minutes = ceil($decimals * 60);
     return "{$output} and {$minutes} minute" . plural($minutes);
 }
