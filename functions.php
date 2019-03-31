@@ -15,10 +15,14 @@ function pretty_print_time($time)
         $minutes = 0;
     }
 
-    $output = "{$hours} hour" . plural($hours);
-    if (!$minutes) {
-        return $output;
+    $output = [];
+    if ($hours) {
+        $output['hours'] = "{$hours} hour" . plural($hours);
     }
 
-    return "{$output} and {$minutes} minute" . plural($minutes);
+    if ($minutes) {
+        $output['minutes'] = "{$minutes} minute" . plural($minutes);
+    }
+
+    return implode(' and ', $output);
 }
