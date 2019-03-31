@@ -34,6 +34,13 @@ $report = $report_client->details([
 $hours_worked_this_month = round((($report['total_grand'] / 1000) / 60) / 60, 2)    ;
 
 $working_hours_per_month = 150;
+
+if ($hours_worked_this_month > $working_hours_per_month) {
+    $over_total = pretty_print_time($hours_worked_this_month - $working_hours_per_month);
+    echo "You have worked <strong>{$over_total}</strong> over and above the contracted total of {$working_hours_per_month} for the month.";
+    exit;
+}
+
 $hours_remaining = $working_hours_per_month - $hours_worked_this_month;
 
 $last_day_of_the_month = date('t');
