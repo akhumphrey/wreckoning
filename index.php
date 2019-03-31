@@ -39,7 +39,8 @@ $hours_remaining = $working_hours_per_month - $hours_worked_this_month;
 $last_day_of_the_month = date('t');
 $today = date('j');
 if ($today == $last_day_of_the_month) {
-    echo "You have {$hours_remaining} to complete today";
+    $total_hours_minutes = pretty_print_time($hours_remaining);
+    echo "You have <strong>{$total_hours_minutes}</strong> to complete today.";
     exit;
 }
 
@@ -67,4 +68,4 @@ $average_hours_minutes = pretty_print_time($average);
 
 $day_plural = plural($days_remaining);
 $days = "{$days_remaining} day{$day_plural}";
-echo "You have <strong>{$days}</strong> to complete <strong>{$total_hours_minutes}</strong>, approximately <strong>{$average_hours_minutes}</strong> per day";
+echo "You have <strong>{$days}</strong> to complete <strong>{$total_hours_minutes}</strong>, approximately <strong>{$average_hours_minutes}</strong> per day.";
