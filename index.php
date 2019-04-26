@@ -68,7 +68,7 @@ for ($i = 0; $i < $remaining_days_this_month; $i++) {
     $days_remaining++;
 }
 
-$average    = round($hours_remaining / $days_remaining, 2);
+$average = round($hours_remaining / $days_remaining, 2);
 
 $total_hours_minutes   = pretty_print_time($hours_remaining);
 $average_hours_minutes = pretty_print_time($average);
