@@ -68,11 +68,11 @@ for ($i = 0; $i < $remaining_days_this_month; $i++) {
     $days_remaining++;
 }
 
-$average = round($hours_remaining / $days_remaining, 2);
+$average = round($hours_remaining / ($days_remaining + 1), 2);
 
 $total_hours_minutes   = pretty_print_time($hours_remaining);
 $average_hours_minutes = pretty_print_time($average);
 
 $day_plural = plural($days_remaining);
-$days = "{$days_remaining} day{$day_plural}";
-echo "You have <strong>{$days}</strong> to complete <strong>{$total_hours_minutes}</strong>, approximately <strong>{$average_hours_minutes}</strong> per day.";
+$days = "{$days_remaining} more day{$day_plural}";
+echo "You have <strong>today and {$days}</strong> to complete <strong>{$total_hours_minutes}</strong>, approximately <strong>{$average_hours_minutes}</strong> per day.";
