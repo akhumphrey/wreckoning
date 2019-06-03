@@ -68,11 +68,23 @@ for ($i = 0; $i < $remaining_days_this_month; $i++) {
     $days_remaining++;
 }
 
+if ($days_remaining === 0) {
+    $total_hours_minutes = pretty_print_time($hours_remaining);
+    echo "You have <strong>{$total_hours_minutes}</strong> to complete today.";
+    exit;
+}
+
 $average = round($hours_remaining / ($days_remaining + 1), 2);
 
 $total_hours_minutes   = pretty_print_time($hours_remaining);
 $average_hours_minutes = pretty_print_time($average);
 
 $day_plural = plural($days_remaining);
+
+$working_today = 'today and';
+if (in_array(date('D'), $non_contact_weekdays) || in_array(date('d'), $additional_skipped_days)) {
+    $working_today = null;
+}
+
 $days = "{$days_remaining} more day{$day_plural}";
-echo "You have <strong>today and {$days}</strong> to complete <strong>{$total_hours_minutes}</strong>, approximately <strong>{$average_hours_minutes}</strong> per day.";
+echo "You have <strong>{$working_today}{$days}</strong> to complete <strong>{$total_hours_minutes}</strong>, approximately <strong>{$average_hours_minutes}</strong> per day.";
