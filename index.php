@@ -81,7 +81,7 @@ $average_hours_minutes = pretty_print_time($average);
 
 $day_plural = plural($days_remaining);
 
-$working_today = 'today and';
+$working_today = 'today and ';
 if (in_array(date('D'), $non_contact_weekdays) || in_array(date('d'), $additional_skipped_days)) {
     $working_today = null;
 }
