@@ -52,16 +52,18 @@ if ($today == $last_day_of_the_month) {
 }
 
 $remaining_days_this_month = $last_day_of_the_month - $today;
-$non_contact_weekdays    = ['Tue', 'Wed'];
-$additional_skipped_days = [];
-$days_remaining          = 0;
+$non_contact_weekdays      = ['Tue', 'Wed'];
+$additional_skipped_days   = [];
+$additionally_working_days = [];
+$days_remaining            = 0;
 
 $running_day = time();
 for ($i = 0; $i < $remaining_days_this_month; $i++) {
     $running_day = strtotime('+1 day', $running_day);
     $non_contact = in_array(date('D', $running_day), $non_contact_weekdays);
     $skipped     = in_array(date('d', $running_day), $additional_skipped_days);
-    if ($non_contact || $skipped) {
+    $additional  = in_array(date('d', $running_day), $additionally_working_days);
+    if (($non_contact || $skipped) && !$additional) {
         continue;
     }
 
