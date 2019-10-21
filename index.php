@@ -7,12 +7,15 @@ require_once __DIR__ . '/functions.php';
 use AJT\Toggl\TogglClient;
 use AJT\Toggl\ReportsClient;
 
+$total_working_hours_per_month = 150;
+
 $toggl_client = TogglClient::factory([
     'api_key'    => $api_key,
     'apiVersion' => $api_version
 ]);
 
 $workspace_id = null;
+
 foreach ($toggl_client->getWorkspaces([]) as $workspace) {
     $workspace_id = $workspace['id'];
     break;
@@ -24,30 +27,30 @@ $report_client = ReportsClient::factory([
     'debug'      => false,
 ]);
 
-$report = $report_client->details([
-    'since'        => date('Y-m-01'),
-    'until'        => date('Y-m-t'),
+$report_params = [
     'user_agent'   => 'PHP API Client',
     'workspace_id' => $workspace_id,
+];
+
+$report = $report_client->details($report_params + [
+    'since' => date('Y-m-01'),
+    'until' => date('Y-m-t'),
 ]);
+$hours_worked_this_month = round((($report['total_grand'] / 1000) / 60) / 60, 2);
 
-$hours_worked_this_month = round((($report['total_grand'] / 1000) / 60) / 60, 2)    ;
-
-$working_hours_per_month = 150;
-
-if ($hours_worked_this_month > $working_hours_per_month) {
-    $over_total = pretty_print_time($hours_worked_this_month - $working_hours_per_month);
-    echo "You have worked <strong>{$over_total}</strong> over and above the contracted total of {$working_hours_per_month} for the month.";
+if ($hours_worked_this_month > $total_working_hours_per_month) {
+    $over_total = pretty_print_time($hours_worked_this_month - $total_working_hours_per_month);
+    echo "You have worked <strong>{$over_total}</strong> over and above the contracted total of {$total_working_hours_per_month} for the month.";
     exit;
 }
 
-$hours_remaining = $working_hours_per_month - $hours_worked_this_month;
+$hours_remaining_this_month = $total_working_hours_per_month - $hours_worked_this_month;
 
 $last_day_of_the_month = date('t');
 $today = date('j');
 if ($today == $last_day_of_the_month) {
-    $total_hours_minutes = pretty_print_time($hours_remaining);
-    echo "You have <strong>{$total_hours_minutes}</strong> to complete today.";
+    $total_hours_minutes_for_rendering = pretty_print_time($hours_remaining_this_month);
+    echo "You have <strong>{$total_hours_minutes_for_rendering}</strong> to complete today.";
     exit;
 }
 
@@ -71,15 +74,21 @@ for ($i = 0; $i < $remaining_days_this_month; $i++) {
 }
 
 if ($days_remaining === 0) {
-    $total_hours_minutes = pretty_print_time($hours_remaining);
-    echo "You have <strong>{$total_hours_minutes}</strong> to complete today.";
+    $total_hours_minutes_for_rendering = pretty_print_time($hours_remaining_this_month);
+    echo "You have <strong>{$total_hours_minutes_for_rendering}</strong> to complete today.";
     exit;
 }
 
-$average = round($hours_remaining / ($days_remaining + 1), 2);
+$report = $report_client->details($report_params + [
+    'since' => date('Y-m-d'),
+    'until' => date('Y-m-d'),
+]);
+$hours_worked_today = round((($report['total_grand'] / 1000) / 60) / 60, 2);
 
-$total_hours_minutes   = pretty_print_time($hours_remaining);
-$average_hours_minutes = pretty_print_time($average);
+$average = round($hours_remaining_this_month / $days_remaining, 2);
+
+$total_hours_minutes_for_rendering   = pretty_print_time($hours_remaining_this_month);
+$average_hours_minutes_for_rendering = pretty_print_time($average);
 
 $day_plural = plural($days_remaining);
 
@@ -89,4 +98,27 @@ if (in_array(date('D'), $non_contact_weekdays) || in_array(date('d'), $additiona
 }
 
 $days = "{$days_remaining} more day{$day_plural}";
-echo "You have <strong>{$working_today}{$days}</strong> to complete <strong>{$total_hours_minutes}</strong>, approximately <strong>{$average_hours_minutes}</strong> per day.";
+
+?>
+<p>
+    You have <strong><?= $working_today . $days; ?></strong> to complete
+    <strong><?= $total_hours_minutes_for_rendering; ?></strong>, approximately
+    <strong><?= $average_hours_minutes_for_rendering; ?></strong> per day.
+</p>
+<?php
+if ($hours_worked_today) {
+?>
+<p>
+    You have worked <strong><?= pretty_print_time($hours_worked_today); ?></strong> today.
+<?php
+    if ($hours_worked_today >= $average) {
+        $over = pretty_print_time($hours_worked_today - $average);
+        echo "This is {$over} more than the expected average.";
+    } elseif ($working_today) {
+        $remaining = pretty_print_time($average - $hours_worked_today);
+        echo "You have another <strong>{$remaining}</strong> left to work today.";
+    }
+?>
+</p>
+<?php
+}
