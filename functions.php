@@ -24,5 +24,5 @@ function pretty_print_time($time)
         $output['minutes'] = "{$minutes} minute" . plural($minutes);
     }
 
-    return implode(' and ', $output);
+    return '<strong>' . implode(' and ', $output) . '</strong>';
 }

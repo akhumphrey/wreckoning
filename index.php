@@ -40,7 +40,7 @@ $hours_worked_this_month = round((($report['total_grand'] / 1000) / 60) / 60, 2)
 
 if ($hours_worked_this_month > $total_working_hours_per_month) {
     $over_total = pretty_print_time($hours_worked_this_month - $total_working_hours_per_month);
-    echo "You have worked <strong>{$over_total}</strong> over and above the contracted total of {$total_working_hours_per_month} for the month.";
+    echo "You have worked {$over_total} over and above the contracted total of {$total_working_hours_per_month} for the month.";
     exit;
 }
 
@@ -50,7 +50,7 @@ $last_day_of_the_month = date('t');
 $today = date('j');
 if ($today == $last_day_of_the_month) {
     $total_hours_minutes_for_rendering = pretty_print_time($hours_remaining_this_month);
-    echo "You have <strong>{$total_hours_minutes_for_rendering}</strong> to complete today.";
+    echo "You have {$total_hours_minutes_for_rendering} to complete today.";
     exit;
 }
 
@@ -75,7 +75,7 @@ for ($i = 0; $i < $remaining_days_this_month; $i++) {
 
 if ($days_remaining === 0) {
     $total_hours_minutes_for_rendering = pretty_print_time($hours_remaining_this_month);
-    echo "You have <strong>{$total_hours_minutes_for_rendering}</strong> to complete today.";
+    echo "You have {$total_hours_minutes_for_rendering} to complete today.";
     exit;
 }
 
@@ -116,7 +116,7 @@ if ($hours_worked_today) {
         echo "This is {$over} more than the expected average.";
     } elseif ($working_today) {
         $remaining = pretty_print_time($average - $hours_worked_today);
-        echo "You have another <strong>{$remaining}</strong> left to work today.";
+        echo "You have another {$remaining} left to work today.";
     }
 ?>
 </p>
