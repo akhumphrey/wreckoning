@@ -79,6 +79,11 @@ if ($days_remaining === 0) {
     exit;
 }
 
+$working_today = 'today and ';
+if (in_array(date('D'), $non_contact_weekdays) || in_array(date('d'), $additional_skipped_days)) {
+    $working_today = null;
+}
+
 $report = $report_client->details($report_params + [
     'since' => date('Y-m-d'),
     'until' => date('Y-m-d'),
@@ -91,11 +96,6 @@ $total_hours_minutes_for_rendering   = pretty_print_time($hours_remaining_this_m
 $average_hours_minutes_for_rendering = pretty_print_time($average);
 
 $day_plural = plural($days_remaining);
-
-$working_today = 'today and ';
-if (in_array(date('D'), $non_contact_weekdays) || in_array(date('d'), $additional_skipped_days)) {
-    $working_today = null;
-}
 
 $days = "{$days_remaining} more day{$day_plural}";
 
