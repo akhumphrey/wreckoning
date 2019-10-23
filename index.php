@@ -90,7 +90,11 @@ $report = $report_client->details($report_params + [
 ]);
 $hours_worked_today = round((($report['total_grand'] / 1000) / 60) / 60, 2);
 
-$average = round($hours_remaining_this_month / $days_remaining, 2);
+if ($working_today) {
+    $average = round($hours_remaining_this_month / ($days_remaining + 1), 2);
+} else {
+    $average = round($hours_remaining_this_month / $days_remaining, 2);
+}
 
 $total_hours_minutes_for_rendering   = pretty_print_time($hours_remaining_this_month);
 $average_hours_minutes_for_rendering = pretty_print_time($average);
