@@ -32,25 +32,35 @@ $report_params = [
     'workspace_id' => $workspace_id,
 ];
 
+$until = date('d');
+if ((int) $until > 1) {
+    $until -= 1;
+}
+
 $report = $report_client->details($report_params + [
     'since' => date('Y-m-01'),
-    'until' => date('Y-m-t'),
+    'until' => date("Y-m-{$until}"),
 ]);
 $hours_worked_this_month = round((($report['total_grand'] / 1000) / 60) / 60, 2);
 
 if ($hours_worked_this_month > $total_working_hours_per_month) {
     $over_total = pretty_print_time($hours_worked_this_month - $total_working_hours_per_month);
-    echo "You have worked {$over_total} over and above the contracted total of {$total_working_hours_per_month} for the month.";
+?>
+<p>
+    You have worked <?= $over_total; ?> over and above the contracted total of
+    <?= $total_working_hours_per_month; ?> for the month.
+</p>
+<?php
     exit;
 }
 
-$hours_remaining_this_month = $total_working_hours_per_month - $hours_worked_this_month;
+$hours_remaining_this_month        = $total_working_hours_per_month - $hours_worked_this_month;
+$total_hours_minutes_for_rendering = pretty_print_time($hours_remaining_this_month);
 
 $last_day_of_the_month = date('t');
 $today = date('j');
 if ($today == $last_day_of_the_month) {
-    $total_hours_minutes_for_rendering = pretty_print_time($hours_remaining_this_month);
-    echo "You have {$total_hours_minutes_for_rendering} to complete today.";
+    echo "<p>You have {$total_hours_minutes_for_rendering} left to complete today.</p>";
     exit;
 }
 
@@ -74,8 +84,7 @@ for ($i = 0; $i < $remaining_days_this_month; $i++) {
 }
 
 if ($days_remaining === 0) {
-    $total_hours_minutes_for_rendering = pretty_print_time($hours_remaining_this_month);
-    echo "You have {$total_hours_minutes_for_rendering} to complete today.";
+    echo "<p>You have {$total_hours_minutes_for_rendering} left to complete today.</p>";
     exit;
 }
 
@@ -96,13 +105,16 @@ if ($working_today) {
     $average = round($hours_remaining_this_month / $days_remaining, 2);
 }
 
-$total_hours_minutes_for_rendering   = pretty_print_time($hours_remaining_this_month);
-$average_hours_minutes_for_rendering = pretty_print_time($average);
+$total_hours_minutes_for_rendering = pretty_print_time($hours_remaining_this_month - $hours_worked_today);
 
-$day_plural = plural($days_remaining);
+if ($days_remaining === 1) {
+    echo "<p>You have <strong>1 more day</strong> to complete {$total_hours_minutes_for_rendering}.</p>";
+} else {
+    $average_hours_minutes_for_rendering = pretty_print_time($average);
 
-$days = "{$days_remaining} more day{$day_plural}";
+    $day_plural = plural($days_remaining);
 
+    $days = "{$days_remaining} more day{$day_plural}";
 ?>
 <p>
     You have <strong><?= $working_today . $days; ?></strong> to complete
@@ -110,6 +122,8 @@ $days = "{$days_remaining} more day{$day_plural}";
     <strong><?= $average_hours_minutes_for_rendering; ?></strong> per day.
 </p>
 <?php
+}
+
 if ($hours_worked_today) {
 ?>
 <p>
