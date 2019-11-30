@@ -3,8 +3,9 @@
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/functions.php';
 
-if (isset($ENV['timezone'])) {
-    date_default_timezone_set($ENV['timezone']);
+$timezone = getenv('timezone');
+if (!empty($timezone)) {
+    date_default_timezone_set($timezone);
 }
 
 use AJT\Toggl\TogglClient;
@@ -13,8 +14,8 @@ use AJT\Toggl\ReportsClient;
 $total_working_hours_per_month = 150;
 
 $toggl_client = TogglClient::factory([
-    'api_key'    => $ENV['api_key'],
-    'apiVersion' => $ENV['api_version']
+    'api_key'    => getenv('api_key'),
+    'apiVersion' => getenv('api_version'),
 ]);
 
 $workspace_id = null;
@@ -25,8 +26,8 @@ foreach ($toggl_client->getWorkspaces([]) as $workspace) {
 }
 
 $report_client = ReportsClient::factory([
-    'api_key'    => $ENV['api_key'],
-    'apiVersion' => $ENV['api_reporting_version'],
+    'api_key'    => getenv('api_key'),
+    'apiVersion' => getenv('api_reporting_version'),
     'debug'      => false,
 ]);
 
