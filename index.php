@@ -2,11 +2,8 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/functions.php';
+require_once __DIR__ . '/env.php';
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
-
-$timezone = getenv('timezone');
 if (!empty($timezone)) {
     date_default_timezone_set($timezone);
 }
@@ -14,11 +11,9 @@ if (!empty($timezone)) {
 use AJT\Toggl\TogglClient;
 use AJT\Toggl\ReportsClient;
 
-$total_working_hours_per_month = getenv('total_working_hours_per_month');
-
 $toggl_client = TogglClient::factory([
-    'api_key'    => getenv('api_key'),
-    'apiVersion' => getenv('api_version'),
+    'api_key'    => $api_key,
+    'apiVersion' => $api_version,
 ]);
 
 $workspace_id = null;
@@ -29,8 +24,8 @@ foreach ($toggl_client->getWorkspaces([]) as $workspace) {
 }
 
 $report_client = ReportsClient::factory([
-    'api_key'    => getenv('api_key'),
-    'apiVersion' => getenv('api_reporting_version'),
+    'api_key'    => $api_key,
+    'apiVersion' => $api_reporting_version,
     'debug'      => false,
 ]);
 
@@ -90,17 +85,14 @@ if ($today == $last_day_of_the_month) {
 $remaining_days_this_month = $last_day_of_the_month - $today;
 $days_remaining = 0;
 
-$non_contact_days = getenv('non_contact_days') ?: [];
 if (!is_array($non_contact_days)) {
     $non_contact_days = explode(',', $non_contact_days);
 }
 
-$additionally_skipped_days = getenv('additionally_skipped_days') ?: [];
 if (!is_array($additionally_skipped_days)) {
     $additionally_skipped_days = explode(',', $additionally_skipped_days);
 }
 
-$additional_working_days = getenv('additional_working_days') ?: [];
 if (!is_array($additional_working_days)) {
     $additional_working_days = explode(',', $additional_working_days);
 }
