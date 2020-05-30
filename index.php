@@ -58,7 +58,7 @@ if ($hours_worked_this_month > $total_working_hours_per_month) {
 ?>
 <p>
     You have worked <?= $over_total; ?> over and above the contracted total of
-    <?= $total_working_hours_per_month; ?> for the month.
+    <?= $total_working_hours_per_month; ?> hours for the month.
 </p>
 <?php
     exit;
