@@ -127,9 +127,8 @@ if ($working_today) {
 }
 
 $total_hours_minutes_for_rendering = pretty_print_time($hours_remaining_this_month - $hours_worked_today);
-
 if ($days_remaining === 1) {
-    echo "<p>You have <strong>1 more day</strong> to complete {$total_hours_minutes_for_rendering}.</p>";
+    echo "<p>You have <strong>today and 1 more day</strong> to complete {$total_hours_minutes_for_rendering}.</p>";
 } else {
     $average_hours_minutes_for_rendering = pretty_print_time($average);
 
