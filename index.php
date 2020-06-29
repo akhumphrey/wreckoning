@@ -110,6 +110,7 @@ for ($i = 0; $i < $remaining_days_this_month; $i++) {
     $days_remaining++;
 }
 
+$total_hours_minutes_for_rendering = pretty_print_time($hours_remaining_this_month - $hours_worked_today);
 if ($days_remaining === 0) {
     echo "<p>You have {$total_hours_minutes_for_rendering} left to complete today.</p>";
     exit;
@@ -126,7 +127,6 @@ if ($working_today) {
     $average = round($hours_remaining_this_month / $days_remaining, 2);
 }
 
-$total_hours_minutes_for_rendering = pretty_print_time($hours_remaining_this_month - $hours_worked_today);
 if ($days_remaining === 1) {
     echo "<p>You have <strong>today and 1 more day</strong> to complete {$total_hours_minutes_for_rendering}.</p>";
 } else {
