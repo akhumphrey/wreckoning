@@ -4,11 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fcb3ed1da7694d0a42c377ca6ec671c4",
+    "content-hash": "077d219fcd8fbda8569beef5fcc378c6",
     "packages": [
         {
             "name": "ajt/guzzle-toggl",
-            "version": "dev-master",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/arendjantetteroo/guzzle-toggl.git",
@@ -25,7 +25,6 @@
                 "guzzlehttp/guzzle": "^6.2",
                 "guzzlehttp/guzzle-services": "^1.1"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -57,7 +56,7 @@
             ],
             "support": {
                 "issues": "https://github.com/arendjantetteroo/guzzle-toggl/issues",
-                "source": "https://github.com/arendjantetteroo/guzzle-toggl/tree/master"
+                "source": "https://github.com/arendjantetteroo/guzzle-toggl/tree/v1.1.0"
             },
             "time": "2021-05-14T11:39:07+00:00"
         },
@@ -1213,9 +1212,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "ajt/guzzle-toggl": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
