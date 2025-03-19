@@ -1,5 +1,6 @@
 services:
     nginx:
+        restart: unless-stopped
         build:
             context: .
             dockerfile: docker/Dockerfile
@@ -11,7 +12,8 @@ services:
             - ./:/var/www/html/
 
     php:
-        image: php:fpm-alpine
+        restart: unless-stopped
+        image: php:8.2-fpm-alpine
         networks:
             - internal
         volumes:
