@@ -13,7 +13,7 @@ services:
 
     php:
         restart: unless-stopped
-        image: php:8.2-fpm-alpine
+        image: php:8.4-fpm-alpine
         networks:
             - internal
         volumes:
