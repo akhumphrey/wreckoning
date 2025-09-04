@@ -1,9 +1,9 @@
 {
     "require": {
-        "php": ">=7.3",
-        "ember-devops/guzzle-toggl": "^9.0"
+        "php": ">=8.4",
+        "ember-industries/guzzle-toggl": "^9.0"
     },
     "require-dev": {
-        "vlucas/phpdotenv": "^4.1"
+        "vlucas/phpdotenv": "^5.6.1"
     }
 }
