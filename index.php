@@ -4,36 +4,6 @@ require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/functions.php';
 require_once __DIR__ . '/env.php';
 
-if (!empty($timezone)) {
-    date_default_timezone_set($timezone);
-}
-
-use AJT\Toggl\TogglClient;
-use AJT\Toggl\ReportsClient;
-
-$toggl_client = TogglClient::factory([
-    'api_key'    => $api_key,
-    'apiVersion' => $api_version,
-]);
-
-$workspace_id = null;
-
-foreach ($toggl_client->getWorkspaces([]) as $workspace) {
-    $workspace_id = $workspace['id'];
-    break;
-}
-
-$report_client = ReportsClient::factory([
-    'api_key'    => $api_key,
-    'apiVersion' => $api_reporting_version,
-    'debug'      => false,
-]);
-
-$report_params = [
-    'user_agent'   => 'PHP API Client',
-    'workspace_id' => $workspace_id,
-];
-
 $until = date('d');
 if ((int) $until > 1) {
     $until -= 1;
