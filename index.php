@@ -13,13 +13,13 @@ $report = $report_client->details($report_params + [
     'since' => date('Y-m-01'),
     'until' => date("Y-m-{$until}"),
 ]);
-$hours_worked_before_today = round((($report['total_grand'] / 1000) / 60) / 60, 2);
+$hours_worked_before_today = rounded_hours($report['total_grand']);
 
 $report = $report_client->details($report_params + [
     'since' => date('Y-m-d'),
     'until' => date('Y-m-d'),
 ]);
-$hours_worked_today = round((($report['total_grand'] / 1000) / 60) / 60, 2);
+$hours_worked_today = rounded_hours($report['total_grand']);
 
 $hours_worked_this_month = $hours_worked_before_today + $hours_worked_today;
 

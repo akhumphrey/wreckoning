@@ -26,3 +26,8 @@ function pretty_print_time($time)
 
     return '<strong>' . implode(' and ', $output) . '</strong>';
 }
+
+function rounded_hours($time): string
+{
+    return round((($time / 1000) / 60) / 60, 2);
+}
