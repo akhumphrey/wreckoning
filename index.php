@@ -97,22 +97,23 @@ if ($working_today) {
     $average = round($hours_remaining_this_month / $days_remaining, 2);
 }
 
-if ($days_remaining === 1) {
-    echo "<p>You have <strong>today and 1 more day</strong> to complete {$total_hours_minutes_for_rendering}.</p>";
-} else {
-    $average_hours_minutes_for_rendering = pretty_print_time($average);
-
-    $day_plural = plural($days_remaining);
-
-    $days = "{$days_remaining} more day{$day_plural}";
+$average_hours_minutes_for_rendering = pretty_print_time($average);
 ?>
 <p>
-    You have <strong><?= $working_today . $days; ?></strong> to complete
+<?php
+if ($days_remaining === 1) {
+    echo "You have <strong>{$working_today}1 more day</strong>";
+} else {
+    $day_plural = plural($days_remaining);
+    $days       = "{$days_remaining} more day{$day_plural}";
+    echo "You have <strong>{$working_today}{$days}</strong>";
+}
+?>
+    to complete
     <strong><?= $total_hours_minutes_for_rendering; ?></strong>, approximately
     <strong><?= $average_hours_minutes_for_rendering; ?></strong> per day.
 </p>
 <?php
-}
 
 if ($hours_worked_today) {
 ?>
