@@ -3,6 +3,7 @@
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/functions.php';
 require_once __DIR__ . '/env.php';
+require_once __DIR__ . '/templates/header.php';
 
 $until = date('d');
 if ((int) $until > 1) {
@@ -43,7 +44,7 @@ $today = date('j');
 if ($today == $last_day_of_the_month) {
     if ($hours_worked_today) {
 ?>
-<p>You have worked <strong><?= pretty_print_time($hours_worked_today); ?></strong> today.</p>
+<p>You have worked <?= pretty_print_time($hours_worked_today); ?> today.</p>
 <?php
     }
 ?>
@@ -110,15 +111,15 @@ if ($days_remaining === 1) {
 }
 ?>
     to complete
-    <strong><?= $total_hours_minutes_for_rendering; ?></strong>, approximately
-    <strong><?= $average_hours_minutes_for_rendering; ?></strong> per day.
+    <?= $total_hours_minutes_for_rendering; ?>, approximately
+    <?= $average_hours_minutes_for_rendering; ?> per day.
 </p>
 <?php
 
 if ($hours_worked_today) {
 ?>
 <p>
-    You have worked <strong><?= pretty_print_time($hours_worked_today); ?></strong> today.
+    You have worked <?= pretty_print_time($hours_worked_today); ?> today.
 <?php
     if ($hours_worked_today >= $average) {
         $over = pretty_print_time($hours_worked_today - $average);
@@ -131,3 +132,4 @@ if ($hours_worked_today) {
 </p>
 <?php
 }
+require_once __DIR__ . '/templates/footer.php';
