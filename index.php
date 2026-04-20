@@ -24,6 +24,10 @@ $hours_worked_today = rounded_hours($report['total_grand']);
 
 $hours_worked_this_month = $hours_worked_before_today + $hours_worked_today;
 
+?>
+<h3>Today</h3>
+<?php
+
 if ($hours_worked_this_month > $total_working_hours_per_month) {
     $over_total = pretty_print_time($hours_worked_this_month - $total_working_hours_per_month);
 ?>
@@ -132,4 +136,44 @@ if ($hours_worked_today) {
 </p>
 <?php
 }
+
+if ($additionally_skipped_days || $additional_working_days) {
+?>
+<h4>Modifiers in effect this month:</h4>
+<?php
+    if ($additionally_skipped_days) {
+?>
+<p>
+    Skipping the following day<?= plural(count($additionally_skipped_days)); ?>:
+    <ul>
+<?php
+        foreach ($additionally_skipped_days as $day) {
+?>
+        <li><?= $day . date('S', strtotime(date('Y-m-') . $day)); ?></li>
+<?php
+        }
+?>
+    </ul>
+</p>
+<?php
+    }
+
+    if ($additional_working_days) {
+?>
+<p>
+    Added the following day<?= plural(count($additional_working_days)); ?>:
+    <ul>
+<?php
+        foreach ($additional_working_days as $day) {
+?>
+        <li><?= $day . date('S', strtotime(date('Y-m-') . $day)); ?></li>
+<?php
+        }
+?>
+    </ul>
+</p>
+<?php
+    }
+}
+
 require_once __DIR__ . '/templates/footer.php';
