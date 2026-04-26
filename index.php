@@ -148,8 +148,9 @@ if ($additionally_skipped_days || $additional_working_days) {
     <ul>
 <?php
         foreach ($additionally_skipped_days as $day) {
+            $line = $day . date('S', strtotime(date('Y-m-') . $day));
 ?>
-        <li><?= $day . date('S', strtotime(date('Y-m-') . $day)); ?></li>
+        <li><?= $day < date('j') ? "<s>{$line}</s>" : $line; ?></li>
 <?php
         }
 ?>
@@ -165,8 +166,9 @@ if ($additionally_skipped_days || $additional_working_days) {
     <ul>
 <?php
         foreach ($additional_working_days as $day) {
+            $line = $day . date('S', strtotime(date('Y-m-') . $day));
 ?>
-        <li><?= $day . date('S', strtotime(date('Y-m-') . $day)); ?></li>
+        <li><?= $day < date('j') ? "<s>{$line}</s>" : $line; ?></li>
 <?php
         }
 ?>
