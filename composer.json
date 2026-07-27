@@ -1,7 +1,7 @@
 {
     "require": {
         "php": ">=8.4",
-        "ajt/guzzle-toggl": "^2.1"
+        "ember-industries/guzzle-toggl": "dev-main"
     },
     "require-dev": {
         "vlucas/phpdotenv": "^5.6.1"

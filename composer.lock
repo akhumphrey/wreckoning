@@ -4,27 +4,28 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "71e13e5869014b01a44c02056b0ca7d0",
+    "content-hash": "d870c313c3e6b05acbcac009380811dc",
     "packages": [
         {
-            "name": "ajt/guzzle-toggl",
-            "version": "v2.1.0",
+            "name": "ember-industries/guzzle-toggl",
+            "version": "dev-main",
             "source": {
                 "type": "git",
-                "url": "https://github.com/arendjantetteroo/guzzle-toggl.git",
-                "reference": "2fe192e8d7e7d40c387fac3dc99e60d7768091a5"
+                "url": "https://github.com/ember-industries/guzzle-toggl.git",
+                "reference": "ad0e437956b2f6e3fe30ec8809b9b553face5f3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/arendjantetteroo/guzzle-toggl/zipball/2fe192e8d7e7d40c387fac3dc99e60d7768091a5",
-                "reference": "2fe192e8d7e7d40c387fac3dc99e60d7768091a5",
+                "url": "https://api.github.com/repos/ember-industries/guzzle-toggl/zipball/ad0e437956b2f6e3fe30ec8809b9b553face5f3b",
+                "reference": "ad0e437956b2f6e3fe30ec8809b9b553face5f3b",
                 "shasum": ""
             },
             "require": {
                 "guzzlehttp/guzzle": "^7.3",
-                "guzzlehttp/guzzle-services": "^1.2",
+                "guzzlehttp/guzzle-services": "^1.7",
                 "inveniem/guzzle-description-loader": "v1.0.0"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -50,10 +51,9 @@
                 "toggl"
             ],
             "support": {
-                "issues": "https://github.com/arendjantetteroo/guzzle-toggl/issues",
-                "source": "https://github.com/arendjantetteroo/guzzle-toggl/tree/v2.1.0"
+                "source": "https://github.com/ember-industries/guzzle-toggl/tree/main"
             },
-            "time": "2024-09-04T15:20:56+00:00"
+            "time": "2026-07-27T22:39:24+00:00"
         },
         {
             "name": "guzzlehttp/command",
@@ -1688,7 +1688,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "ember-industries/guzzle-toggl": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
